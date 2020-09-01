@@ -2,7 +2,8 @@
     <b-form @submit.prevent="submit" @reset="reset">
         <div id="club-logo-image-holder">
             <div> No Image Found </div>
-            <div id="club-logo-image">  </div>
+            <img id="club-logo-img" src=""/>
+            <div id="club-logo-image"></div>
         </div>
 
         <b-form-group
@@ -99,14 +100,13 @@
 
         methods: {
             loadDescription() {
-                this.getLogo();
-
                 this.$http.get('description')
                     .then((response) => {
                         this.description = response.data.description;
                         this.link = response.data.form_link;
                         this.filePath = response.data.path_of_image;
                         this.file = null;
+                        this.getLogo();
                     })
                     .catch(error => this.$notify.alert('Sorry, something went wrong retrieving files: ' + error.message));
 
@@ -116,7 +116,6 @@
 
                 formData.append('file[]', this.file);
 
-                console.log(this.description);
                 formData.append('description', this.description);
                 formData.append('link', this.link);
                 this.$http.post('description', formData, {headers: {'Content-Type': 'multipart/form-data'}})
@@ -129,8 +128,13 @@
             },
 
             getLogo() {
-                $('#club-logo-image').css({'background-image': `url("")`});
-                $('#club-logo-image').css({'background-image': `url("${this.$url + '/' + 'club_logo?' + this.queryString}")`});
+                if (this.filePath === '') {
+                    $('#club-logo-image').hide();
+                } else {
+                    $('#club-logo-image').css({'background-image': `url("")`});
+                    $('#club-logo-image').css({'background-image': `url("${this.$url + '/' + 'club_logo?' + this.queryString}")`});
+                    $('#club-logo-image').show();
+                }
             },
 
             reset() {
@@ -143,7 +147,7 @@
                 // $('#club-logo-image').css({'background-image': `url("${this.$url + '/' + 'club_logo?' + this.queryString}")`});
                 // this.$http.get('description').then(response => console.log(response.data)).catch(err => console.log(err));
                 // this.$http.get('description').then(response => console.log(response)).catch(err => console.log(err));
-                // this.$http.delete('description/' + 0).then(response => console.log(response)).catch(err => console.log(err));
+                this.$http.delete('description/' + 0).then(response => console.log(response)).catch(err => console.log(err));
                 // this.$http.get('club_logo').then((response) => {
                 // this.$http.get('club_logo').then((response) => {
                 //     console.log(response);
