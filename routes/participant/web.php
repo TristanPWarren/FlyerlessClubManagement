@@ -12,5 +12,12 @@
 */
 
 use Illuminate\Support\Facades\Route;
+use logoIlluminate\Http\Request;
 
-Route::get('/', 'ParticipantPageController@index');
+Route::namespace('Participant')->group(function() {
+    Route::get('/', 'ParticipantPageController@index');
+});
+
+Route::namespace('ParticipantApi')->group(function() {
+    Route::get('club_logo', 'DescriptionController@club_logo');
+});

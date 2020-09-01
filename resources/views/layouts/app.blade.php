@@ -7,9 +7,9 @@
 @endsection
 
 @push('styles')
-    <link href="{{ asset('modules/template/css/module.css') }}" rel="stylesheet">
+    <link href="{{ asset('modules/flyerless-club-management/css/module.css') }}" rel="stylesheet">
 @endpush
 
 @push('scripts')
-    <script src="{{ asset('modules/template/js/module.js') }}"></script>
+    <script src="{{ asset('modules/flyerless-club-management/js/module.js') }}"></script>
 @endpush

@@ -13,4 +13,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', 'AdminPageController@index');
+Route::namespace('Admin')->group(function() {
+    Route::get('/', 'AdminPageController@index');
+});

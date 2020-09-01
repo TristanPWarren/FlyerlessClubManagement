@@ -17,7 +17,7 @@ class Controller
     public function authorize($ability, $arguments = [])
     {
         return $this->baseAuthorize(
-            'template.' . $ability,
+            alias() . '.' . $ability,
             $arguments
         );
     }
