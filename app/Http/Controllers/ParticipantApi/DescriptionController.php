@@ -157,6 +157,3 @@ class DescriptionController extends Controller
     }
 
 }
-
-//TODO: Types of file extensions
-//TODO: Completion criteria

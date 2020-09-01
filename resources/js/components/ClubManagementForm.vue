@@ -9,7 +9,7 @@
         <b-form-group
             id="image-label"
             label-for="image"
-            :description="'Select an image to be used as the logo for your club, can be in the form: ' + allowedExtensions"
+            :description="'Select an image to be used as the logo for your club, must be of type: .png, .jpeg, .jpg or .gif ' + allowedExtensions"
         >
 
             <b-form-file
@@ -59,6 +59,10 @@
 
 
 </template>
+
+<!--image/gif-->
+<!--image/jpeg-->
+<!--image/png-->
 
 <script>
     export default {
@@ -112,18 +116,27 @@
 
             },
             submit() {
-                let formData = new FormData();
+                let allowedFiles = ['image/gif', 'image/jpeg', 'image/png']
 
-                formData.append('file[]', this.file);
+                if ((this.file !== null) && (allowedFiles.indexOf(this.file.type) === -1)) {
+                    this.$notify.alert('File type must be of JPEG, PNG or GIF');
 
-                formData.append('description', this.description);
-                formData.append('link', this.link);
-                this.$http.post('description', formData, {headers: {'Content-Type': 'multipart/form-data'}})
-                    .then(response => {
-                        this.$notify.success('Description Updated!');
-                        this.loadDescription();
-                    })
-                    .catch(error => this.$notify.alert('There was a problem updating your description: ' + error.message));
+                } else {
+                    let formData = new FormData();
+
+                    formData.append('file[]', this.file);
+
+                    formData.append('description', this.description);
+                    formData.append('link', this.link);
+
+                    this.$http.post('description', formData, {headers: {'Content-Type': 'multipart/form-data'}})
+                        .then(response => {
+                            this.$notify.success('Description Updated!');
+                            this.loadDescription();
+                        })
+                        .catch(error => this.$notify.alert('There was a problem updating your description: ' + error.message));
+                }
+
 
             },
 
