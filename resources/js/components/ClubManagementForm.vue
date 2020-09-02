@@ -151,8 +151,9 @@
             },
 
             reset() {
-                console.log("FORM RESET");
 
+                //TODO: Remove when done
+                // console.log("FORM RESET");
                 // this.$url + '/' + (this.isOldFiles ? 'old-file' : 'file') + '/' + id + '/download?' + this.queryString;
                 // $('#club-logo-image').css({'background-image': ''});
                 // console.log(this.$url + '/' + 'club_logo?' + this.queryString);
@@ -160,7 +161,7 @@
                 // $('#club-logo-image').css({'background-image': `url("${this.$url + '/' + 'club_logo?' + this.queryString}")`});
                 // this.$http.get('description').then(response => console.log(response.data)).catch(err => console.log(err));
                 // this.$http.get('description').then(response => console.log(response)).catch(err => console.log(err));
-                this.$http.delete('description/' + 0).then(response => console.log(response)).catch(err => console.log(err));
+                // this.$http.delete('description/' + 0).then(response => console.log(response)).catch(err => console.log(err));
                 // this.$http.get('club_logo').then((response) => {
                 // this.$http.get('club_logo').then((response) => {
                 //     console.log(response);
@@ -169,8 +170,8 @@
                 // console.log(this.$url);
 
                 //TODO: put back in
-                // this.title = this.defaultDocumentTitle;
-                // this.file = null;
+                this.title = this.defaultDocumentTitle;
+                this.file = null;
             }
         },
 

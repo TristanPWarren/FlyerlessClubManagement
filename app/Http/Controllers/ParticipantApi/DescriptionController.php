@@ -134,7 +134,6 @@ class DescriptionController extends Controller
 
 //TODO: Ask Toby when laravel can resolve dependencies?
 //TODO: Ask Toby, in fileupload when delete is called are the files actually deleted
-//TODO: Ask Toby how to do images
     private function createBlankDescription(Authentication $authentication, Request $request) {
         //Check user has a group
         if ($authentication->getGroup() !== null) {
