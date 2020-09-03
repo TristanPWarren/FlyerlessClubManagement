@@ -48,7 +48,7 @@ class ModuleServiceProvider extends ServiceProvider
     ];
 
     protected $completionConditions = [
-        'description_updated' => \Flyerless\FlyerlessClubManagement\CompletionConditions\DescriptionCompletion::class
+        'flyerless_club_management_description_updated' => \Flyerless\FlyerlessClubManagement\CompletionConditions\DescriptionCompletion::class
     ];
     
     protected $commands = [

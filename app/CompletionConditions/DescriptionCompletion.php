@@ -15,7 +15,7 @@ class DescriptionCompletion extends CompletionCondition
     public function isComplete($settings, ActivityInstance $activityInstance, ModuleInstance $moduleInstance): bool
     {
         //Check if club description exists
-        $description = Description::forResource()->first();
+        $description = Description::forResource($activityInstance->id, $moduleInstance->id)->first();
 
         if ($description === null ) {
             return false;
@@ -27,7 +27,7 @@ class DescriptionCompletion extends CompletionCondition
     public function percentage($settings, ActivityInstance $activityInstance, ModuleInstance $moduleInstance): int
     {
         //Check if club description exists
-        $description = Description::forResource()->first();
+        $description = Description::forResource($activityInstance->id, $moduleInstance->id)->first();
 
         if ($description === null ) {
             return 0;
@@ -54,6 +54,6 @@ class DescriptionCompletion extends CompletionCondition
 
     public function alias(): string
     {
-        return 'description_updated';
+        return 'flyerless_club_management_description_updated';
     }
 }
