@@ -10,11 +10,9 @@
                     <h2 class="">Welcome</h2>
                     <p class="">
                         Welcome to your module! This is the administrator side
-                        
-                        <example-component></example-component>
                     </p>
-                </div>
             </div>
         </div>
     </div>
+
 @endsection

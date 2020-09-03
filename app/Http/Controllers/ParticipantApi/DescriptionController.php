@@ -17,12 +17,6 @@ class DescriptionController extends Controller
 {
 
     public function index(Request $request, Authentication $authentication) {
-        //FOR TESTING
-//        $controlGroup = $authentication->getRole();
-//        $deleteRows = Description::forResource()->get()->delete();
-//        $description = Description::forResource()->first();
-//        dd($description);
-
         $this->authorize('club.index');
 
         //Check if club description exists
@@ -131,9 +125,6 @@ class DescriptionController extends Controller
 
 
 //    Helpers:
-
-//TODO: Ask Toby when laravel can resolve dependencies?
-//TODO: Ask Toby, in fileupload when delete is called are the files actually deleted
     private function createBlankDescription(Authentication $authentication, Request $request) {
         //Check user has a group
         if ($authentication->getGroup() !== null) {

@@ -10,3 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::namespace('AdminApi')->group(function() {
+    Route::apiResource('description', 'AdminDescriptionController');
+    Route::get('description_all', 'DescriptionController@description_all');
+});

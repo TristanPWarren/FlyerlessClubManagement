@@ -41,6 +41,11 @@ class ModuleServiceProvider extends ServiceProvider
             'description' => 'Remove the details of the club',
             'admin' => false,
         ],
+        'admin.club.index' => [
+            'name' => 'View all club details',
+            'description' => 'Fetch all club details for all clubs',
+            'admin' => true,
+        ]
     ];
 
     protected $events = [

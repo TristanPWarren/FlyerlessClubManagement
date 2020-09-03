@@ -60,9 +60,6 @@
 
 </template>
 
-<!--image/gif-->
-<!--image/jpeg-->
-<!--image/png-->
 
 <script>
     export default {
