@@ -1,0 +1,8 @@
+.Admins
+* xref:functionality.adoc[Admins]
+* Setup
+** xref:events.adoc[Events]
+** xref:permissions.adoc[Permissions]
+** xref:commands.adoc[Commands]
+** xref:connections.adoc[Connections]
+** xref:settings.adoc[Settings]

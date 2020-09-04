@@ -1,0 +1,3 @@
+= Functionality
+
+As of now, this module does not include an administrator side.
