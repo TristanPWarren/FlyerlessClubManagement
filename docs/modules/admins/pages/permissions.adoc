@@ -1,0 +1,5 @@
+= Permissions
+
+List out the permissions your module exposes, and what each one does.
+
+This will help anyone setting up your module to understand the effects of revoking or giving permissions.

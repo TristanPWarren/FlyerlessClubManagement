@@ -1,0 +1,3 @@
+= Settings
+
+List what settings you have. Show the effects of changing them, recommended values, and anything else to make setup as easy as possible.

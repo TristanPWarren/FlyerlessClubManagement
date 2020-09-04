@@ -1,0 +1,3 @@
+= Commands
+
+Does your module register any commands? What do they do, what options do they take etc?

@@ -1,0 +1,3 @@
+= Connections
+
+What connections does your module register? Why does it need them? What permissions does it need the person to have?
