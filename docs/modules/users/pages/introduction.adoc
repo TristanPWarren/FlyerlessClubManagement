@@ -1,0 +1,8 @@
+= Introduction
+
+This side of the module lets users manage their club information for Flyerless.
+
+- Image upload
+- Description
+
+This page can be used to show students how to fill in the module. Are there any requirements for images? What kind of description should they give? This can also be split into multiple pages if you want, take a look at the admin section to see how to do it!

@@ -1,0 +1,3 @@
+= Events
+
+You can list the events you fire here, as well as the data contained in them! See more about events in the support docs.

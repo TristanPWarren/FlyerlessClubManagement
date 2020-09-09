@@ -1,0 +1,8 @@
+= Introduction
+
+The flyerless club management module exists to...
+
+- What problems does this module solve
+- What does it allow people to do
+
+Flyerless is a company specialising in virtual sign-ups. Learn more at http://flyerless.co.uk/[http://flyerless.co.uk/].

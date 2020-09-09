@@ -1,0 +1,6 @@
+= Introduction
+
+This documentation can be used to guide a developer through your module. Once it's been read, a developer familiar with Laravel should be able to develop with your module.
+
+
+The benefits of doing this mean others can get involved and improve/add to you module without you needing to help them understand what you did.
