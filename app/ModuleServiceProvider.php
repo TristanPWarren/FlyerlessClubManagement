@@ -4,8 +4,11 @@ namespace Flyerless\FlyerlessClubManagement;
 
 use BristolSU\Support\Module\ModuleServiceProvider as ServiceProvider;
 use BristolSU\Support\Completion\Contracts\CompletionConditionManager;
+use BristolSU\Support\Connection\Contracts\ConnectorStore;
 use Flyerless\FlyerlessClubManagement\Models\Description;
+use BristolSU\Support\Connection\ServiceRequest;
 use Flyerless\FlyerlessClubManagement\CompletionConditions\DescriptionCompletion;
+use Flyerless\FlyerlessClubManagement\Connectors;
 use FormSchema\Schema\Form;
 use Illuminate\Support\Facades\Route;
 
@@ -59,6 +62,10 @@ class ModuleServiceProvider extends ServiceProvider
     protected $commands = [
         
     ];
+
+    protected $requiredServices = [
+        'flyerless'
+    ];
     
     public function alias(): string
     {
@@ -79,9 +86,25 @@ class ModuleServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-//        $this->app->make(CompletionConditionManager::class)->register(
-//            $this->alias(), 'description_updated', DescriptionCompletion::class
+//        $this->registerConnector(
+//            'Flyerless Api (Required)',
+//            'Connect to Flyerless',
+//            'flyerless-club-api',
+//            'flyerless',
+//            Flyerless\FlyerlessClubManagement\Connectors\OAuth::class
 //        );
+
+        $connectorStore = $this->app->make(ConnectorStore::class);
+        $connectorStore->register(
+            'Flyerless Api (Required)',
+            'Connect to Flyerless',
+            'flyerless-club-api',
+            'flyerless',
+            \Flyerless\FlyerlessClubManagement\Connectors\OAuth::class
+        );
+
+        $serviceRequest = $this->app->make(ServiceRequest::class);
+        $serviceRequest->required('flyerless-club-management', $this->requiredServices);
 
 
         Route::bind('update_description', function($id) {

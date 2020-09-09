@@ -158,7 +158,8 @@
                 // $('#club-logo-image').css({'background-image': `url("${this.$url + '/' + 'club_logo?' + this.queryString}")`});
                 // this.$http.get('description').then(response => console.log(response.data)).catch(err => console.log(err));
                 // this.$http.get('description').then(response => console.log(response)).catch(err => console.log(err));
-                // this.$http.delete('description/' + 0).then(response => console.log(response)).catch(err => console.log(err));
+                console.log("DELETE BUTTON");
+                this.$http.delete('description/' + 0).then(response => console.log(response)).catch(err => console.log(err));
                 // this.$http.get('club_logo').then((response) => {
                 // this.$http.get('club_logo').then((response) => {
                 //     console.log(response);

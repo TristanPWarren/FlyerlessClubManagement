@@ -12,5 +12,5 @@
 */
 Route::namespace('AdminApi')->group(function() {
     Route::apiResource('description', 'AdminDescriptionController');
-    Route::get('description_all', 'DescriptionController@description_all');
+    Route::get('description_all', 'AdminDescriptionController@description_all');
 });

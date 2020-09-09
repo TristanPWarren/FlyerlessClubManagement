@@ -4,6 +4,7 @@
 namespace Flyerless\FlyerlessClubManagement\Http\Controllers\AdminApi;
 
 
+use BristolSU\Support\ModuleInstance\Contracts\ModuleInstance;
 use Flyerless\FlyerlessClubManagement\Models\Description;
 use Flyerless\FlyerlessClubManagement\Http\Controllers\Controller;
 use BristolSU\Support\Authentication\Contracts\Authentication;
@@ -24,6 +25,7 @@ class AdminDescriptionController extends Controller
     public function description_all(Request $request, Authentication $authentication, ModuleInstance $moduleInstance) {
         $this->authorize('admin.club.index');
 
+        dd("HELLO");
         return forModuleInstance();
     }
 

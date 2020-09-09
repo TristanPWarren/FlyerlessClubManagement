@@ -103,6 +103,8 @@ class DescriptionController extends Controller
 
     public function destroy(Request $request, Authentication $authentication)
     {
+        dd($request->route('module_instance_slug'));
+
         $this->authorize('club.delete');
 
         Description::forResource()->first()->delete();

@@ -2,6 +2,7 @@ import Vue from 'vue';
 import BootstrapVue from 'bootstrap-vue';
 import http from 'http-client';
 import AWN from "awesome-notifications";
+window.$ = require('jquery');
 
 import ClubManagementForm from './components/ClubManagementForm';
 
