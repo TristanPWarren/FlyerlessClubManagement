@@ -86,17 +86,9 @@ class ModuleServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-//        $this->registerConnector(
-//            'Flyerless Api (Required)',
-//            'Connect to Flyerless',
-//            'flyerless-club-api',
-//            'flyerless',
-//            Flyerless\FlyerlessClubManagement\Connectors\OAuth::class
-//        );
-
         $connectorStore = $this->app->make(ConnectorStore::class);
         $connectorStore->register(
-            'Flyerless Api (Required)',
+            'Flyerless Api (Required to use Flyerless Club Description Update)',
             'Connect to Flyerless',
             'flyerless-club-api',
             'flyerless',

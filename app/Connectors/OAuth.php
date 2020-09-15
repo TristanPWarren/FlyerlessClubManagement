@@ -15,12 +15,12 @@ class OAuth extends Connector
     /**
      * @inheritDoc
      */
-    public function request($method, $uri, array $options = [])
+    public function request($method, $uri, array $apiOptions = [])
     {
-        $options['base_uri'] = config('typeform_service.base_uri');
-        $headers = ((isset($options['headers']) && is_array($options['headers']))?$options['headers']:[]);
-        $headers['Authorization'] = 'Bearer ' . $this->getAccessToken();
-        $options['headers'] = $headers;
+        $options = array();
+        $options['base_uri'] = 'https://dev.flyerless.co.uk/API/';
+        $options['form_params']['API_token'] = $this->getAccessToken();
+        $options['form_params'] = array_merge($options['form_params'], $apiOptions);
         return $this->client->request($method, $uri, $options);
     }
 
@@ -30,8 +30,14 @@ class OAuth extends Connector
     public function test(): bool
     {
         try {
-            $this->request('get', '/me');
-            return true;
+            $options = ['Request_Type' => 0];
+            $response = $this->request('POST', '', $options);
+            $response = json_decode($response->getBody());
+            if ($response->Authorised === "True") {
+                return true;
+            } else {
+                return false;
+            }
         } catch (GuzzleException $e) {
             return false;
         }
@@ -49,18 +55,62 @@ class OAuth extends Connector
         )->getSchema();
     }
 
-    private function getAccessToken($refreshable = false): string
+    private function getAccessToken(): string
     {
-        $authCode = AuthModel::findOrFail($this->getSetting('auth_code_id'));
-        if($authCode->isValid()) {
-            return $authCode->auth_code;
+        //Get authModel if it exists
+        try {
+            $api_key = $this->getSetting('api_key');
+            $authModel = AuthModel::where('api_key', '=', $api_key)->firstOrFail();
+
+            if ($authModel->isTokenValid()) {
+                return $authModel->access_token;
+            }
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            //AuthModel not found
+            $authModel = null;
         }
-        if($refreshable && $this->refreshAccessToken($authCode)) {
-            return $this->getAccessToken(false);
-        } else {
-            // TODO Throw special error to send email to people
-            throw new \Exception('Access token could not be refreshed');
+
+        try {
+            return $this->refreshAccessToken($authModel);
+        } catch (Exception $e) {
+            throw new \Exception('Flyerless API Token could not be refreshed');
         }
+
+    }
+
+
+    private function refreshAccessToken(?AuthModel $authModel)
+    {
+        //Create new AuthModel if one doesn't exist
+        if ($authModel === null) {
+            $authModel = AuthModel::create([
+                'api_key' => $this->getSetting('api_key')
+            ]);
+        }
+
+        //Get token from flyerless
+        $options = [];
+
+        $options['base_uri'] = 'https://dev.flyerless.co.uk/API/';
+        $options['form_params'] = [];
+        $options['form_params']['API_KEY'] = $this->getSetting('api_key');
+
+        try {
+            $tokenResponse = $this->client->request('POST', '', $options);
+        } catch (\Exception $e) {
+            dd($e);
+        }
+
+        //Add token to authModel
+        $authModel->access_token = json_decode($tokenResponse->getBody()->getContents())->Token;
+
+        //Add Date to authModel
+        $authModel->expires_at = Carbon::now()->addMinutes(25);
+
+    	$authModel->save();
+
+    	// Return the new access token
+    	return $authModel->access_token;
     }
 
 }

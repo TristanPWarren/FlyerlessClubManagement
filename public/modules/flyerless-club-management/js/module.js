@@ -169,6 +169,46 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ClubManagementForm",
   props: {
@@ -194,6 +234,9 @@ __webpack_require__.r(__webpack_exports__);
       title: '',
       description: '',
       link: '',
+      instagram: '',
+      facebook: '',
+      website: '',
       file: null,
       filePath: ''
     };
@@ -208,6 +251,9 @@ __webpack_require__.r(__webpack_exports__);
       this.$http.get('description').then(function (response) {
         _this.description = response.data.description;
         _this.link = response.data.form_link;
+        _this.instagram = response.data.club_instagram;
+        _this.facebook = response.data.club_facebook;
+        _this.website = response.data.club_website;
         _this.filePath = response.data.path_of_image;
         _this.file = null;
 
@@ -228,6 +274,9 @@ __webpack_require__.r(__webpack_exports__);
         formData.append('file[]', this.file);
         formData.append('description', this.description);
         formData.append('link', this.link);
+        formData.append('instagram', this.instagram);
+        formData.append('facebook', this.facebook);
+        formData.append('website', this.website);
         this.$http.post('description', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
@@ -264,19 +313,15 @@ __webpack_require__.r(__webpack_exports__);
       // $('#club-logo-image').css({'background-image': `url("${this.$url + '/' + 'club_logo?' + this.queryString}")`});
       // this.$http.get('description').then(response => console.log(response.data)).catch(err => console.log(err));
       // this.$http.get('description').then(response => console.log(response)).catch(err => console.log(err));
-      console.log("DELETE BUTTON");
-      this.$http["delete"]('description/' + 0).then(function (response) {
-        return console.log(response);
-      })["catch"](function (err) {
-        return console.log(err);
-      }); // this.$http.get('club_logo').then((response) => {
+      // console.log("DELETE BUTTON");
+      // this.$http.delete('description/' + 0).then(response => console.log(response)).catch(err => console.log(err));
+      // this.$http.get('club_logo').then((response) => {
       // this.$http.get('club_logo').then((response) => {
       //     console.log(response);
       //     $('#club-logo-image').css({'background-image': `url("data:image/png;base64,${response.data}")`});
       // }).catch(err => console.log(err));
       // console.log(this.$url);
       //TODO: put back in
-
       this.title = this.defaultDocumentTitle;
       this.file = null;
     }
@@ -50453,7 +50498,7 @@ var render = function() {
           attrs: {
             id: "description-label",
             "label-for": "description",
-            description: "Write a description of your club"
+            description: "Write a description of your club (Required)"
           }
         },
         [
@@ -50471,6 +50516,78 @@ var render = function() {
                 _vm.description = $$v
               },
               expression: "description"
+            }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "b-form-group",
+        {
+          attrs: {
+            id: "instagram-label",
+            "label-for": "instagram",
+            description: "Provide a link to your clubs Instagram"
+          }
+        },
+        [
+          _c("b-form-input", {
+            attrs: { id: "instagram", type: "text" },
+            model: {
+              value: _vm.instagram,
+              callback: function($$v) {
+                _vm.instagram = $$v
+              },
+              expression: "instagram"
+            }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "b-form-group",
+        {
+          attrs: {
+            id: "facebook-label",
+            "label-for": "facebook",
+            description: "Provide a link to your clubs Facebook"
+          }
+        },
+        [
+          _c("b-form-input", {
+            attrs: { id: "facebook", type: "text" },
+            model: {
+              value: _vm.facebook,
+              callback: function($$v) {
+                _vm.facebook = $$v
+              },
+              expression: "facebook"
+            }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "b-form-group",
+        {
+          attrs: {
+            id: "website-label",
+            "label-for": "website",
+            description: "Provide a link to your clubs website"
+          }
+        },
+        [
+          _c("b-form-input", {
+            attrs: { id: "website", type: "text" },
+            model: {
+              value: _vm.website,
+              callback: function($$v) {
+                _vm.website = $$v
+              },
+              expression: "website"
             }
           })
         ],

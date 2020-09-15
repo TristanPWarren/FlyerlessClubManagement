@@ -15,9 +15,14 @@ class CreateFlyerlessClubManagementClubDescriptionTable extends Migration
     {
         Schema::create('flyerless_club_management_club_description', function(Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('club');
+            $table->unsignedInteger('club_id');
+            $table->string('club_name');
             $table->text('description')->nullable();
             $table->string('form_link');
+            $table->string('club_email');
+            $table->string('club_facebook');
+            $table->string('club_instagram');
+            $table->string('club_website');
             $table->string('mime');
             $table->string('path_of_image');
             $table->integer('size');

@@ -10,9 +10,15 @@ use Illuminate\Support\Facades\Crypt;
 
 class FlyerlessAuthCode extends Model
 {
+    protected $table = 'flyerless_auth_codes';
 
-    protected $hidden = [
-        'auth_code', 'expires_at', 'refresh_token'
+    protected $fillable = [
+        'api_key',
+    ];
+
+    protected $attributes = [
+        'access_token' => '',
+        'expires_at' => '2020-09-11 22:00:00',
     ];
 
     protected $casts = [
@@ -33,29 +39,29 @@ class FlyerlessAuthCode extends Model
             ->orderBy('created_at', 'DESC');
     }
 
-    public function isValid()
+    public function isTokenValid()
     {
         return $this->expires_at->isFuture();
     }
 
-    public function setAuthCodeAttribute($authCode)
-    {
-        $this->attributes['auth_code'] = Crypt::encrypt($authCode);
-    }
+//    public function setApiKeyAttribute($apiKey)
+//    {
+//        $this->attributes['api_key'] = Crypt::encrypt($apiKey);
+//    }
+//
+//    public function getApiKeyAttribute($apiKey)
+//    {
+//        return Crypt::decrypt($apiKey);
+//    }
 
-    public function getAuthCodeAttribute($authCode)
-    {
-        return Crypt::decrypt($authCode);
-    }
-
-    public function setRefreshTokenAttribute($refreshToken)
-    {
-        $this->attributes['refresh_token'] = Crypt::encrypt($refreshToken);
-    }
-
-    public function getRefreshTokenAttribute($refreshToken)
-    {
-        return Crypt::decrypt($refreshToken);
-    }
+//    public function setAccessTokenAttribute($accessToken)
+//    {
+//        $this->attributes['access_token'] = Crypt::encrypt($accessToken);
+//    }
+//
+//    public function getAccessTokenAttribute($accessToken)
+//    {
+//        return Crypt::decrypt($accessToken);
+//    }
 
 }

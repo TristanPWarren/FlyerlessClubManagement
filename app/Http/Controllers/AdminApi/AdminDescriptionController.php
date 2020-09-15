@@ -16,16 +16,16 @@ use Illuminate\Support\Facades\Storage;
 
 class AdminDescriptionController extends Controller
 {
-    public function index(Request $request, Authentication $authentication, ModuleInstance $moduleInstance) {
+    public function index() {
         $this->authorize('admin.club.index');
 
         return forResource()->first();
     }
 
-    public function description_all(Request $request, Authentication $authentication, ModuleInstance $moduleInstance) {
+    public function description_all() {
         $this->authorize('admin.club.index');
-
         dd("HELLO");
+
         return forModuleInstance();
     }
 

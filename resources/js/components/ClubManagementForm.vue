@@ -24,7 +24,7 @@
         <b-form-group
                 id="description-label"
                 label-for="description"
-                description="Write a description of your club"
+                description="Write a description of your club (Required)"
         >
             <b-form-textarea
                     id="description"
@@ -36,6 +36,46 @@
             ></b-form-textarea>
         </b-form-group>
 
+        <!-- Instagram -->
+        <b-form-group
+                id="instagram-label"
+                label-for="instagram"
+                description="Provide a link to your clubs Instagram"
+        >
+            <b-form-input
+                    id="instagram"
+                    v-model="instagram"
+                    type="text"
+            ></b-form-input>
+        </b-form-group>
+
+        <!-- Facebook -->
+        <b-form-group
+                id="facebook-label"
+                label-for="facebook"
+                description="Provide a link to your clubs Facebook"
+        >
+            <b-form-input
+                    id="facebook"
+                    v-model="facebook"
+                    type="text"
+            ></b-form-input>
+        </b-form-group>
+
+        <!-- Website -->
+        <b-form-group
+                id="website-label"
+                label-for="website"
+                description="Provide a link to your clubs website"
+        >
+            <b-form-input
+                    id="website"
+                    v-model="website"
+                    type="text"
+            ></b-form-input>
+        </b-form-group>
+
+        <!-- Microsoft Form -->
         <b-form-group
                 id="link-label"
                 label-for="link"
@@ -90,6 +130,9 @@
                 title: '',
                 description: '',
                 link: '',
+                instagram: '',
+                facebook: '',
+                website: '',
                 file: null,
                 filePath: '',
             }
@@ -105,6 +148,9 @@
                     .then((response) => {
                         this.description = response.data.description;
                         this.link = response.data.form_link;
+                        this.instagram = response.data.club_instagram;
+                        this.facebook = response.data.club_facebook;
+                        this.website = response.data.club_website;
                         this.filePath = response.data.path_of_image;
                         this.file = null;
                         this.getLogo();
@@ -125,6 +171,9 @@
 
                     formData.append('description', this.description);
                     formData.append('link', this.link);
+                    formData.append('instagram', this.instagram);
+                    formData.append('facebook', this.facebook);
+                    formData.append('website', this.website);
 
                     this.$http.post('description', formData, {headers: {'Content-Type': 'multipart/form-data'}})
                         .then(response => {
@@ -158,8 +207,8 @@
                 // $('#club-logo-image').css({'background-image': `url("${this.$url + '/' + 'club_logo?' + this.queryString}")`});
                 // this.$http.get('description').then(response => console.log(response.data)).catch(err => console.log(err));
                 // this.$http.get('description').then(response => console.log(response)).catch(err => console.log(err));
-                console.log("DELETE BUTTON");
-                this.$http.delete('description/' + 0).then(response => console.log(response)).catch(err => console.log(err));
+                // console.log("DELETE BUTTON");
+                // this.$http.delete('description/' + 0).then(response => console.log(response)).catch(err => console.log(err));
                 // this.$http.get('club_logo').then((response) => {
                 // this.$http.get('club_logo').then((response) => {
                 //     console.log(response);

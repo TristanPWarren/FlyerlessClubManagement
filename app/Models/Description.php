@@ -20,9 +20,14 @@ class Description extends Model
     protected $table = 'flyerless_club_management_club_description';
 
     protected $fillable = [
-        'club',
+        'club_id',
+        'club_name',
         'description',
         'form_link',
+        'club_email',
+        'club_facebook',
+        'club_instagram',
+        'club_website',
         'mime',
         'path_of_image',
         'size',
