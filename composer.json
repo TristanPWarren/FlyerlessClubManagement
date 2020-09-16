@@ -1,35 +1,43 @@
 {
-    "name": "flyerless/flyerless-club-management",
-    "description": "A module to allow club captains and other authorised committee members to modify their clubs details on the Flyerless system",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Tristan Warren",
-            "email": "tristan@flyerless.co.uk"
-        }
-    ],
-    "require": {
-        "php": "^7.2",
-        "bristol-su/support": "^4.7.2"
-    },
-    "require-dev": {
-        "orchestra/testbench": "^4.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "Flyerless\\FlyerlessClubManagement\\": "app/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Flyerless\\FlyerlessClubManagement\\": "tests/"
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Flyerless\\FlyerlessClubManagement\\ModuleServiceProvider"
-            ]
-        }
+  "name": "flyerless/flyerless-club-management",
+  "description": "A module to allow club captains and other authorised committee members to modify their clubs details on the Flyerless system",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Tristan Warren",
+      "email": "tristan@flyerless.co.uk"
     }
+  ],
+  "require": {
+    "php": "^7.2",
+    "bristol-su/support": "^4.7.2",
+    "phpspec/prophecy-phpunit": "^2.0",
+    "flyerless/flyerless-service": "dev-master"
+  },
+  "require-dev": {
+    "orchestra/testbench": "^4.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Flyerless\\FlyerlessClubManagement\\": "app/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Flyerless\\Tests\\FlyerlessClubManagement\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Flyerless\\FlyerlessClubManagement\\ModuleServiceProvider"
+      ]
+    }
+  },
+  "repositories": [
+    {
+      "type": "path",
+      "url": "./../typeform-service"
+    }
+  ]
 }

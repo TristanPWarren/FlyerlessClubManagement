@@ -5,11 +5,17 @@ namespace Flyerless\FlyerlessClubManagement;
 use BristolSU\Support\Module\ModuleServiceProvider as ServiceProvider;
 use BristolSU\Support\Completion\Contracts\CompletionConditionManager;
 use BristolSU\Support\Connection\Contracts\ConnectorStore;
+use Flyerless\FlyerlessClubManagement\Events\Description\DescriptionCreated;
+use Flyerless\FlyerlessClubManagement\Events\Description\DescriptionUpdated;
+use Flyerless\FlyerlessClubManagement\Listeners\CreateFlyerlessDescription;
+use Flyerless\FlyerlessClubManagement\Listeners\UpdateFlyerlessDescription;
 use Flyerless\FlyerlessClubManagement\Models\Description;
 use BristolSU\Support\Connection\ServiceRequest;
 use Flyerless\FlyerlessClubManagement\CompletionConditions\DescriptionCompletion;
 use Flyerless\FlyerlessClubManagement\Connectors;
 use FormSchema\Schema\Form;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
 
 class ModuleServiceProvider extends ServiceProvider
@@ -58,15 +64,15 @@ class ModuleServiceProvider extends ServiceProvider
     protected $completionConditions = [
         'flyerless_club_management_description_updated' => \Flyerless\FlyerlessClubManagement\CompletionConditions\DescriptionCompletion::class
     ];
-    
+
     protected $commands = [
-        
+
     ];
 
     protected $requiredServices = [
         'flyerless'
     ];
-    
+
     public function alias(): string
     {
         return 'flyerless-club-management';
@@ -76,7 +82,7 @@ class ModuleServiceProvider extends ServiceProvider
     {
         return 'Flyerless\FlyerlessClubManagement\Http\Controllers';
     }
-    
+
     public function baseDirectory()
     {
         return __DIR__ . '/..';
@@ -86,19 +92,6 @@ class ModuleServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-        $connectorStore = $this->app->make(ConnectorStore::class);
-        $connectorStore->register(
-            'Flyerless Api (Required to use Flyerless Club Description Update)',
-            'Connect to Flyerless',
-            'flyerless-club-api',
-            'flyerless',
-            \Flyerless\FlyerlessClubManagement\Connectors\OAuth::class
-        );
-
-        $serviceRequest = $this->app->make(ServiceRequest::class);
-        $serviceRequest->required('flyerless-club-management', $this->requiredServices);
-
-
         Route::bind('update_description', function($id) {
             $description = Description::findOrFail($id);
 
@@ -107,6 +100,9 @@ class ModuleServiceProvider extends ServiceProvider
             }
             throw (new ModelNotFoundException)->setModel(Description::class);
         });
+
+        Event::listen(DescriptionCreated::class, CreateFlyerlessDescription::class);
+        Event::listen(DescriptionUpdated::class, UpdateFlyerlessDescription::class);
     }
 
     public function register()

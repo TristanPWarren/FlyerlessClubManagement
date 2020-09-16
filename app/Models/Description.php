@@ -34,30 +34,7 @@ class Description extends Model
         'uploaded_by',
         'module_instance_id',
         'activity_instance_id',
-        'tags'
     ];
-
-    protected $casts = [
-        'tags' => 'array'
-    ];
-
-    public function getDescriptionByAttribute($uploadedById)
-    {
-        return app()->make(UserRepository::class)->getById($uploadedById);
-    }
-
-    public function scopeWithTag(Builder $query, string $tag)
-    {
-        $activityInstanceRepository = app(ActivityInstanceRepository::class);
-        $activityInstance = $activityInstanceRepository->getById(static::activityInstanceId());
-        $activityInstanceIds = $activityInstanceRepository
-            ->allForResource($activityInstance->resource_type, $activityInstance->resource_id)
-            ->map(function(ActivityInstance $activityInstance) {
-                return $activityInstance->id;
-            });
-        return $query->whereIn('activity_instance_id', $activityInstanceIds->toArray())
-            ->where('tags', 'LIKE', '%"' . $tag . '"%');
-    }
 
     /**
      * @return ModuleInstance
@@ -74,31 +51,5 @@ class Description extends Model
     {
         return app(ActivityInstanceRepository::class)->getById($this->activity_instance_id);
     }
-
-//    public function statuses()
-//    {
-//        return $this->hasMany(FileStatus::class);
-//    }
-
-//    public function getStatusAttribute()
-//    {
-//        if($this->statuses()->count() > 0) {
-//            return $this->statuses()->latest('created_at')->first()->status;
-//        }
-//
-//        $statuses = Config::get('uploadfile.statuses');
-//        if(!is_array($statuses) || count($statuses) === 0) {
-//            $default = 'Awaiting Approval';
-//        } else {
-//            $default = $statuses[0];
-//        }
-//
-//        return $this->moduleInstance()->setting('initial_status', $default);
-//    }
-//
-//    public function comments()
-//    {
-//        return $this->hasMany(Comment::class);
-//    }
 
 }
