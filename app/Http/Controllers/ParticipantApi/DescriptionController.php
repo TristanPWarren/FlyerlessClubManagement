@@ -7,6 +7,8 @@ namespace Flyerless\FlyerlessClubManagement\Http\Controllers\ParticipantApi;
 use BristolSU\Support\Activity\Activity;
 use BristolSU\Support\ModuleInstance\Connection\ModuleInstanceServiceRepository;
 use BristolSU\Support\ModuleInstance\ModuleInstance;
+use Flyerless\FlyerlessClubManagement\Events\Description\DescriptionCreated;
+use Flyerless\FlyerlessClubManagement\Events\Description\DescriptionUpdated;
 use Flyerless\FlyerlessClubManagement\Models\Description;
 use Flyerless\FlyerlessClubManagement\Http\Controllers\Controller;
 use BristolSU\Support\Authentication\Contracts\Authentication;
@@ -48,10 +50,12 @@ class DescriptionController extends Controller
 
         //Check if club description exists
         $description = Description::forResource()->first();
+        $updating = true;
 
         //If no create one with temp values
         if ($description === null ) {
             $this->createBlankDescription($authentication, $request, $groupRepository);
+            $updating = false;
         }
 
         //Update values
@@ -101,7 +105,7 @@ class DescriptionController extends Controller
         } else {
             $descriptionImage = $request->file('file')[0];
             $oldPathToImage = $description->path_of_image;
-            $pathToImage = $descriptionImage->store('flyerlessclubmanagement');
+            $pathToImage = $descriptionImage->store('flyerless-club-management');
 
             $newMime = $descriptionImage->getClientMimeType();
             $newPath = $pathToImage;
@@ -125,89 +129,36 @@ class DescriptionController extends Controller
             Storage::delete($oldPathToImage);
         }
 
-        try {
-            $d = $description;
-            $data = array('portalID' => $d->club_id, 'Name' => $d->club_name, 'Email' => $d->club_email, 'PicLink' => $d->path_of_image,
-                     'Desc' => $d->description, 'Facebook' => $d->club_facebook, 'Instagram' => $d->club_instagram, 'Website' => $d->club_website);
-            $options = array('Request_Type' => 0);
-            $options = array_merge($options, array('Request_Type' => 4));
-            $options = array_merge($options, array('clubData' => json_encode($data)));
-            $connector = app(ModuleInstanceServiceRepository::class)->getConnectorForService('flyerless', $moduleInstance->id);
-            $users = $connector->request('POST', '', $options);
-            dd($users->getBody()->getContents());
-
-        } catch (\BristolSU\Support\ModuleInstance\Connection\NoConnectionAvailable $e) {
-            dd($e);
+        if($updating) {
+            event(new DescriptionUpdated($description));
+        } else {
+            event(new DescriptionCreated($description));
         }
 
         return $description;
     }
 
 
-
-
-    public function destroy(Activity $activity, Request $request, Authentication $authentication, Group $groupRepository, ModuleInstance $moduleInstance)
-    {
-
-//        $group = $groupRepository->getById($authentication->getGroup()->id());
-//
-//        $data = $group->data();
-//
-//        $connector = app(ModuleInstanceServiceRepository::class)->getConnectorForService('flyerless', $moduleInstance->id);
-//        $users = $connector->request('POST', '', []);
-//
-//        dd($users);
-//
-        dd("Function Not Implemented Yet");
-        $this->authorize('club.delete');
-
-        Description::forResource()->first()->delete();
-
-        return "Description Removed";
-    }
-
-
-    public function club_logo() {
-        $this->authorize('club.index');
-
-         $description = Description::forResource()->first();
-
-         if ($description->activity_instance_id !== app(ActivityInstanceResolver::class)->getActivityInstance()->id) {
-             throw new AuthorizationException();
-         }
-
-         return Storage::download($description->path_of_image);
-    }
-
-
 //    Helpers:
     private function createBlankDescription(Authentication $authentication, Request $request, Group $groupRepository) {
-        //Check user has a group
-        if ($authentication->getGroup() !== null) {
-            $group = $groupRepository->getById($authentication->getGroup()->id());
-            $data = $group->data();
+        $group = $groupRepository->getById($authentication->getGroup()->id());
+        $data = $group->data();
 
-            Description::create([
-                'club_id' => $authentication->getGroup()->id(),
-                'club_name' => $data->name(),
-                'description' => "",
-                'form_link' => "",
-                'club_email' => $data->email(),
-                'club_facebook' => "",
-                'club_instagram' => "",
-                'club_website' => "",
-                'mime' => "",
-                'path_of_image' => "",
-                'size' => 0,
-                'uploaded_by' => $authentication->getUser()->id(),
-                'activity_instance_id' => $request->input('activity_instance_id'),
-            ]);
-
-        //TODO: Ask Toby
-        } else {
-            dd("NO GROUP FOUND");
-            //TODO: Throw some sort of error
-        }
+        Description::create([
+            'club_id' => $authentication->getGroup()->id(),
+            'club_name' => $data->name(),
+            'description' => "",
+            'form_link' => "",
+            'club_email' => $data->email(),
+            'club_facebook' => "",
+            'club_instagram' => "",
+            'club_website' => "",
+            'mime' => "",
+            'path_of_image' => "",
+            'size' => 0,
+            'uploaded_by' => $authentication->getUser()->id(),
+            'activity_instance_id' => $request->input('activity_instance_id'),
+        ]);
     }
 
 }
