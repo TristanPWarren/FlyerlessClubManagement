@@ -12,7 +12,7 @@
     "php": "^7.2",
     "bristol-su/support": "^4.7.2",
     "phpspec/prophecy-phpunit": "^2.0",
-    "flyerless/flyerless-service": "dev-master"
+    "flyerless/flyerless-service": "^0.1.1"
   },
   "require-dev": {
     "orchestra/testbench": "^4.0"
@@ -33,11 +33,6 @@
         "Flyerless\\FlyerlessClubManagement\\ModuleServiceProvider"
       ]
     }
-  },
-  "repositories": [
-    {
-      "type": "path",
-      "url": "./../typeform-service"
-    }
-  ]
+  }
 }
+

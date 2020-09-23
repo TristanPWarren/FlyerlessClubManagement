@@ -20,7 +20,7 @@ jobs:
                 with:
                     # Change the name and email to your name and email address
                     add: public/modules
-                    author_name: Toby Twigger
-                    author_email: tobytwigger1@gmail.com
+                    author_name: Tristan Warren
+                    author_email: tristan@flyerless.co.uk
                     message: Compile assets for production
                     force: true
