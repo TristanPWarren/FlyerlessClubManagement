@@ -40,7 +40,7 @@
         <b-form-group
                 id="instagram-label"
                 label-for="instagram"
-                description="Provide a link to your clubs Instagram"
+                description="Provide a link to your clubs Instagram (please use full link including https:// eg. https://www.instagram.com/uobcycling/)"
         >
             <b-form-input
                     id="instagram"
@@ -53,7 +53,7 @@
         <b-form-group
                 id="facebook-label"
                 label-for="facebook"
-                description="Provide a link to your clubs Facebook"
+                description="Provide a link to your clubs Facebook (please use full link including https:// eg. https://www.instagram.com/uobcycling/)"
         >
             <b-form-input
                     id="facebook"
@@ -66,7 +66,7 @@
         <b-form-group
                 id="website-label"
                 label-for="website"
-                description="Provide a link to your clubs website"
+                description="Provide a link to your clubs website (please use full link including https:// eg. https://www.instagram.com/uobcycling/)"
         >
             <b-form-input
                     id="website"
@@ -79,7 +79,7 @@
         <b-form-group
                 id="link-label"
                 label-for="link"
-                description="Provide a link to a Microsoft form to allow users to provide information about themselves"
+                description="Provide a link to a Microsoft form to allow users to provide information about themselves (please use full link including https:// eg. https://www.instagram.com/uobcycling/)"
         >
             <b-form-input
                     id="link"
@@ -87,6 +87,23 @@
                     type="text"
             ></b-form-input>
         </b-form-group>
+
+        <!-- Tags -->
+        <div id="tag-group">
+            <b-form-input id="tag1" class="tag-textbox" v-model="tags[0]" type="text"></b-form-input>
+            <b-form-input id="tag2" class="tag-textbox" v-model="tags[1]" type="text"></b-form-input>
+            <b-form-input id="tag3" class="tag-textbox" v-model="tags[2]" type="text"></b-form-input>
+            <b-form-input id="tag4" class="tag-textbox" v-model="tags[3]" type="text"></b-form-input>
+            <b-form-input id="tag5" class="tag-textbox" v-model="tags[4]" type="text"></b-form-input>
+        </div>
+
+        <b-form-group
+                id="tag-label"
+                label-for="tags"
+                description="Provide up to five tag words for your club (eg. Sport, Team, Competitive, etc...)"
+        >
+        </b-form-group>
+
 
         <div v-if="canUpdate">
             <b-button type="submit" variant="primary">Update</b-button>
@@ -96,6 +113,7 @@
             <div id="authentication-warning"> Use as an authorised user to modify club details </div>
         </div>
     </b-form>
+
 
 
 </template>
@@ -135,6 +153,7 @@
                 website: '',
                 file: null,
                 filePath: '',
+                tags: [],
             }
         },
 
@@ -151,8 +170,10 @@
                         this.instagram = response.data.club_instagram;
                         this.facebook = response.data.club_facebook;
                         this.website = response.data.club_website;
+                        this.tags = response.data.tags.split(',');
                         this.filePath = response.data.path_of_image;
                         this.file = null;
+
                         this.getLogo();
                     })
                     .catch(error => this.$notify.alert('Sorry, something went wrong retrieving files: ' + error.message));
@@ -174,6 +195,13 @@
                     formData.append('instagram', this.instagram);
                     formData.append('facebook', this.facebook);
                     formData.append('website', this.website);
+                    let sendTags = "";
+                    for (let tag of this.tags) {
+                        if (tag !== "") {
+                            sendTags = sendTags + tag + ','
+                        }
+                    }
+                    formData.append('tags', sendTags.slice(0,-1));
 
                     this.$http.post('description', formData, {headers: {'Content-Type': 'multipart/form-data'}})
                         .then(response => {
@@ -256,5 +284,16 @@
 #authentication-warning {
     color: red;
 }
+
+#tag-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+.tag-textbox {
+    width: 18%;
+}
+
+
 
 </style>

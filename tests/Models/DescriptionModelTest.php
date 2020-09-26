@@ -21,6 +21,7 @@ class DescriptionModelTest extends TestCase
           'club_facebook' => 'bsu-club',
           'club_instagram' => '@bsu-club',
           'club_website' => 'https://website.com',
+          'tags' => 'a,list,of,tags',
           'mime' => 'image/png',
           'path_of_image' => 'somepath.png',
           'size' => 580009,
@@ -38,6 +39,7 @@ class DescriptionModelTest extends TestCase
         $this->assertEquals('bsu-club', $description->club_facebook);
         $this->assertEquals('@bsu-club', $description->club_instagram);
         $this->assertEquals('https://website.com', $description->club_website);
+        $this->assertEquals('a,list,of,tags', $description->tags);
         $this->assertEquals('image/png', $description->mime);
         $this->assertEquals('somepath.png', $description->path_of_image);
         $this->assertEquals(580009, $description->size);

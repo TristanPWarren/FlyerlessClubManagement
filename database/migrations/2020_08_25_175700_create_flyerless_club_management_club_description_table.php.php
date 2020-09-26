@@ -23,6 +23,7 @@ class CreateFlyerlessClubManagementClubDescriptionTable extends Migration
             $table->string('club_facebook');
             $table->string('club_instagram');
             $table->string('club_website');
+            $table->string('tags');
             $table->string('mime');
             $table->string('path_of_image');
             $table->integer('size');

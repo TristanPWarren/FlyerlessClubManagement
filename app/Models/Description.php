@@ -28,6 +28,7 @@ class Description extends Model
         'club_facebook',
         'club_instagram',
         'club_website',
+        'tags',
         'mime',
         'path_of_image',
         'size',

@@ -28,10 +28,10 @@ class UpdateDescriptionOnFlyerless implements ShouldQueue
     public function handle(ServiceRepository $serviceRepository)
     {
         $body = [
-          'Request_Type' => 0,
+          'Request_Type' => 4,
           'clubData' => json_encode($this->getData())
         ];
-        $users = $this->connector($serviceRepository)->request('POST', '/', ['form_params' => $body]);
+        $users = $this->connector($serviceRepository)->request('POST', '', $body);
     }
 
     private function getData(): array
@@ -44,7 +44,9 @@ class UpdateDescriptionOnFlyerless implements ShouldQueue
           'Desc' => $this->description->description,
           'Facebook' => $this->description->club_facebook,
           'Instagram' => $this->description->club_instagram,
-          'Website' => $this->description->club_website
+          'Website' => $this->description->club_website,
+          'FormLink' => $this->description->form_link,
+          'Keywords' => $this->description->tags,
         ];
     }
 
@@ -54,3 +56,4 @@ class UpdateDescriptionOnFlyerless implements ShouldQueue
     }
 
 }
+

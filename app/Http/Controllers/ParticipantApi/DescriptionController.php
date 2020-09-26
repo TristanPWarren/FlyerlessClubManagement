@@ -96,6 +96,13 @@ class DescriptionController extends Controller
             $newWebsite = $request->input('website', $description->club_website);
         }
 
+        //Website
+        if ($request->input('tags') === null) {
+            $newTags = '';
+        } else {
+            $newTags = $request->input('tags', $description->tags);
+        }
+
         //Mime, Image Link, Size
         if ($request->file('file') === null) {
             $newMime = $description->mime;
@@ -117,12 +124,37 @@ class DescriptionController extends Controller
         $description->club_instagram = $newInstagram;
         $description->club_facebook = $newFacebook;
         $description->club_website = $newWebsite;
+        $description->tags = $newTags;
         $description->mime = $newMime;
         $description->path_of_image = $newPath;
         $description->size = $newSize;
         $description->uploaded_by = $authentication->getUser()->id();
 
         $description->save();
+
+//        $connector = app(ModuleInstanceServiceRepository::class)->getConnectorForService('flyerless', $moduleInstance->id);
+//        $data = [
+//          'portalID' => $description->club_id,
+//          'Name' => $description->club_name,
+//          'Email' => $description->club_email,
+//          'PicLink' => $description->path_of_image,
+//          'Desc' => $description->description,
+//          'Facebook' => $description->club_facebook,
+//          'Instagram' => $description->club_instagram,
+//          'Website' => $description->club_website,
+//          'FormLink' => $description->form_link,
+//          'Keywords' => $description->tags,
+//          'MembershipLink' => '',
+//        ];
+//
+//        $body = [
+//            'Request_Type' => 4,
+//            'clubData' => json_encode($data),
+//        ];
+//
+//        $response = $connector->request('POST', '', $body);
+//        dd(json_decode((string) $response->getBody()->getContents(), false));
+
 
         //Remove old image
         if ($oldPathToImage !== '') {
@@ -153,6 +185,7 @@ class DescriptionController extends Controller
             'club_facebook' => "",
             'club_instagram' => "",
             'club_website' => "",
+            'tags' => "",
             'mime' => "",
             'path_of_image' => "",
             'size' => 0,

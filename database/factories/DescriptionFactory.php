@@ -22,6 +22,7 @@ $factory->define(Description::class, function (Faker $faker) {
       'club_facebook' => $faker->userName,
       'club_instagram' => '@' . $faker->userName,
       'club_website' => $faker->url,
+      'tags' => $faker->firstName,
       'mime' => mime_content_type($imagePath),
       'path_of_image' => $imagePath,
       'size' => filesize($imagePath),
