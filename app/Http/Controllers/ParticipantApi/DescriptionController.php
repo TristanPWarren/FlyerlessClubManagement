@@ -181,7 +181,7 @@ class DescriptionController extends Controller
             'club_name' => $data->name(),
             'description' => "",
             'form_link' => "",
-            'club_email' => $data->email(),
+            'club_email' => $data->email() ?? '',
             'club_facebook' => "",
             'club_instagram' => "",
             'club_website' => "",
