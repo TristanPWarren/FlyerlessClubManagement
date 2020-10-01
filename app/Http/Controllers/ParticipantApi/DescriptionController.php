@@ -112,7 +112,7 @@ class DescriptionController extends Controller
         } else {
             $descriptionImage = $request->file('file')[0];
             $oldPathToImage = $description->path_of_image;
-            $pathToImage = $descriptionImage->store('flyerless-club-management');
+            $pathToImage = $descriptionImage->storePublicly('flyerless-club-management');
 
             $newMime = $descriptionImage->getClientMimeType();
             $newPath = $pathToImage;
